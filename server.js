@@ -1,8 +1,8 @@
-import express from './nodes_modules/express';
-import session from './nodes_modules/express-session';
-import { json, urlencoded } from './nodes_modules/body-parser';
-import Datastore from './nodes_modules/nedb';
-import { join } from './nodes_modules/path';
+const express = require("express")
+const session = require('express-session');
+const bodyPar = require('body-parser')
+const Datastore = require('nedb')
+const path = require('path')
 const __dirname = path.resolve();
 const app = express();
 
