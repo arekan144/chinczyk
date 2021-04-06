@@ -2,8 +2,8 @@ const express = require("express")
 const session = require('express-session');
 const bodyPar = require('body-parser')
 const Datastore = require('nedb')
-const path = require('path')
-const __dirname = path.resolve();
+
+
 const app = express();
 
 app.use(json());
