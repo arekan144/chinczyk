@@ -30,7 +30,22 @@ let classes = {
             this.sessionid = id;
             this.nickname = nick;
         }
+    },
+    PokujSessji: class {
+        gracze = new Array(4);
+        iluJest = 0;
+        dodajGracza(sesja) {
+            if (this.iluJest < 4) {
+                if (sesja != undefined && sesja != "")
+                    this.gracze[this.iluJest++] = sesja;
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
+
 }
 
 export default { methods, classes };
