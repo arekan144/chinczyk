@@ -1,15 +1,15 @@
 "use strict"
 
-const express = require('express');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const Datastore = require('nedb');
-// const router = express.Router();
+import express from 'express';
+import session from 'express-session';
+import { json, urlencoded } from 'body-parser';
+import Datastore from 'nedb';
+import { join } from 'path';
+const __dirname = path.resolve();
 const app = express();
-var path = require('path');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 
 var PORT = process.env.PORT || 80;
@@ -56,7 +56,7 @@ function wyslijDane(pokoje, req, res) {
     console.log("jest taka sesja")
     res.set('Content-Type', 'text/html')
     // res.send(JSON.stringify(pokoje, null, 5))
-    res.sendFile(path.join(__dirname + "/static/index.html"))
+    res.sendFile(join(__dirname + "/static/index.html"))
 }
 
 
@@ -72,7 +72,7 @@ app.get('/', function (req, res) {
 })
 app.get("/src/main.js", (req, res) => {
     res.set('Content-Type', 'text/javascript')
-    res.sendFile(path.join(__dirname + "/static/src/main.js"))
+    res.sendFile(join(__dirname + "/static/src/main.js"))
 })
 app.post("/", (req, res) => {
     console.log(req.body)
