@@ -1,5 +1,3 @@
-"use strict"
-
 import express from './nodes_modules/express';
 import session from './nodes_modules/express-session';
 import { json, urlencoded } from './nodes_modules/body-parser';
