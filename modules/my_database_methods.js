@@ -21,15 +21,16 @@ let methods = {
     removeFromBase: function (database, string) {
         database.remove({ file: string }, {})
         console.log("yes")
+    },
+
+}
+let classes = {
+    UzytkownikSesji: class {
+        constructor(id, nick) {
+            this.sessionid = id;
+            this.nickname = nick;
+        }
     }
-
 }
-class Track {
-    constructor(file, kat, size) {
-        this.file = file;
-        this.kat = kat;
-        this.size = size;
 
-    };
-}
-export default { methods, Track };
+export default { methods, classes };
