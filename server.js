@@ -9,7 +9,6 @@ const app = express();
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-
 var PORT = process.env.PORT || 80;
 
 var baza_sesji = new Datastore({
