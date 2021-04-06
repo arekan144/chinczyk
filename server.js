@@ -1,7 +1,8 @@
 import express from 'express';
 import session from 'express-session';
 import * as path from 'path';
-import Database from './modules/my_database_methods'
+import Database from './modules/my_database_methods';
+// import Database from './modules/my_database_methods'
 const __dirname = path.resolve();
 const app = express();
 
@@ -17,10 +18,12 @@ app.use(session({
     saveUninitialized: false,
     resave: false,
 }));
-
+async function wyswietl_sesje() {
+    console.log(await Database.methods.readAllFrom(sesje))
+}
 app.get('/', function (req, res) {
     // console.log(req.session, req.sessionID)
-    console.log(Database.methods.readAllFrom(sesje));
+    wyswietl_sesje();
 }).listen(PORT, function () {
     console.log("PORT " + PORT + " włączony")
 })
