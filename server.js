@@ -1,13 +1,12 @@
 import express from 'express';
 import session from 'express-session';
-import { json, urlencoded } from 'body-parser';
 import Datastore from 'nedb';
 import { join } from 'path';
 const __dirname = path.resolve();
 const app = express();
 
-app.use(json());
-app.use(urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 var PORT = process.env.PORT || 80;
 
