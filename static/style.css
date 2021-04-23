@@ -1,0 +1,88 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#strona{
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+}
+
+#gracze {
+    padding: 10px 15px;
+    flex-flow:row;
+    overflow: auto;
+}
+.gracze {
+    min-width: 100px;
+    min-height: 18px;
+    background-color: rgb(185, 185, 185);
+    float:left;
+    padding: 18px;
+    margin-left: 5px;
+    margin-top: 2px;
+    /* display: inline-block; */
+}
+#plansza{
+    margin-left: 5px;
+}
+.gracze .text {
+    width: fit-content;
+    width: -moz-fit-content;
+    margin: 0 auto;
+    text-align: center;
+}
+.readyState{
+    padding: 10px 10px;
+    border-radius: 20%;
+    box-shadow:  25px 0px  #999;
+    border: none;
+    background-color: rgb(212, 212, 212);
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 5px;
+    margin-top: 13px;
+} 
+.readyState:hover {
+    background-color: rgb(219, 219, 219);
+}
+.readyState#ready{
+    box-shadow: -25px 0 #666;
+    transform: translateX(25px);
+    color: white;
+    background-color: rgb(129, 180, 117);
+}
+
+#plansza {
+    position: relative;
+    min-width:fit-content;
+    min-width: -moz-fit-content;
+}
+.blok {
+    width: 48px;
+    height: 48px;
+    border: 1px solid white;
+    position: absolute;
+    display: inline-block;
+}
+.blok.outline {
+    border: 1px solid black;
+}
+.pionek {
+    border-radius: 100%;
+}
+#kostka {
+    border: 1px solid black;
+    background-image: url("./pyt.png");
+    border-radius: 15px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 555px;
+    top: 105px;
+    display: none;
+}
