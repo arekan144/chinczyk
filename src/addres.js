@@ -1,5 +1,5 @@
 export default new class address {
     constructor() {
-        this.adres = "http://localhost:4000/";
+        this.adres = "https://her-testus-destus.herokuapp.com/";
     }
 }
