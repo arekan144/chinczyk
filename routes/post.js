@@ -77,7 +77,7 @@ router.post("/command", async (req, res) => {
         console.log(dane.pokoje[req.body.num])
     }
 
-    let data = await game[req.body.command](dane.uzytkownicy, { id: req.body.id, num: req.body.num, oile: req.body.oile });
+    let data = await game[req.body.command](dane.uzytkownicy, { id: req.body.id, num: req.body.num, pionek: req.body.pionek, oile: req.body.oile });
     res.set({ 'Content-Type': 'aplication/json', 'Access-Control-Allow-Origin': '*' })
     res.send(JSON.stringify(data))
 })

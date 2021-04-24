@@ -124,8 +124,8 @@ class Game {
         }
         //console.log(this.positons, this.finish)
     }
-    refresh() {
-
+    refresh(data) {
+        // data[]
     }
 }
 

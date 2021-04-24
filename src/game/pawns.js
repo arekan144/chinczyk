@@ -10,7 +10,10 @@ class Pawn {
         this.inter = "";
         this.id = "";
         this.numerPokoju = "";
+        this.tab = [false, false, false, false]
     }
+
+
     setValues = (userColor) => {
         this.userColor = userColor;
         // console.log(document.getElementById(userColor + 1));
@@ -29,7 +32,7 @@ class Pawn {
             let num = 0;
             // console.log(num, this.ileKropek)
             clearInterval(this.inter)
-            if (this.ileKropek != 0) {
+            if (this.ileKropek != 0 && this.tab[num]) {
                 for (var x = 0; x < 4; x++) {
                     this.userPawns[x].style.backgroundColor = this.userColor;
                     this.userPawns[x].style.cursor = null
@@ -41,7 +44,7 @@ class Pawn {
             let num = 1;
             // console.log(num, this.ileKropek)
             clearInterval(this.inter)
-            if (this.ileKropek != 0) {
+            if (this.ileKropek != 0 && this.tab[num]) {
                 for (var x = 0; x < 4; x++) {
                     this.userPawns[x].style.backgroundColor = this.userColor;
                     this.userPawns[x].style.cursor = null
@@ -53,7 +56,7 @@ class Pawn {
             let num = 2;
             // console.log(num, this.ileKropek)
             clearInterval(this.inter)
-            if (this.ileKropek != 0) {
+            if (this.ileKropek != 0 && this.tab[num]) {
                 for (var x = 0; x < 4; x++) {
                     this.userPawns[x].style.backgroundColor = this.userColor;
                     this.userPawns[x].style.cursor = null
@@ -65,7 +68,7 @@ class Pawn {
             let num = 3;
             // console.log(num, this.ileKropek)
             clearInterval(this.inter)
-            if (this.ileKropek != 0) {
+            if (this.ileKropek != 0 && this.tab[num]) {
                 for (var x = 0; x < 4; x++) {
                     this.userPawns[x].style.backgroundColor = this.userColor;
                     this.userPawns[x].style.cursor = null
@@ -75,36 +78,59 @@ class Pawn {
         };
     }
     porusz(num, oile) {
-        console.log(this.id, this.numerPokoju, num, oile);
+        console.log(num, oile);
         this.ileKropek = 0;
         axios.post(addres.adres + "command", { command: "changePlace", id: this.id, num: this.numerPokoju, pionek: num, oile: oile }).then();
         document.getElementById("kostka").style.display = "none";
     }
     check = (data) => {
-        console.log(data);
+        // console.log(data);
 
         let amove = [];
         for (var x = 0; x < 4; x++) {
-            if (data.positions[x].relative[0] == "s") {
-                console.log(x, "Jest na stracie!!!")
-                if (this.ileKropek == 1 || this.ileKropek == 6) {
-                    console.log("Moge wyjsc")
-                    amove.push(this.userPawns[x]);
-                } else {
-                    console.log("Nie moge wyjsc!")
-                }
+
+            switch (data.positions[x].absolute[0]) {
+                case "s":
+                    if (this.ileKropek == 1 || this.ileKropek == 6) {
+                        console.log("Moge wyjsc")
+                        this.tab[x] = true;
+                        amove.push(this.userPawns[x]);
+                    } else {
+                        console.log("Nie moge wyjsc!")
+                    }
+                    break;
+                case "f": break;
+                default:
+                    if (data.positions[x].relative <= 40) {
+                        this.tab[x] = true;
+                        amove.push(this.userPawns[x]);
+                    } else {
+
+                    }
+                    break;
             }
-            else {
-                console.log("Jestem poza!!")
-            }
+
+
+            // if (data.positions[x].relative[0] == "s") {
+            //     console.log(x, "Jest na stracie!!!")
+            //     if (this.ileKropek == 1 || this.ileKropek == 6) {
+            //         console.log("Moge wyjsc")
+            //         amove.push(this.userPawns[x]);
+            //     } else {
+            //         console.log("Nie moge wyjsc!")
+            //     }
+            // }
+            // else if (data.positions[x].relative[0] == "f") {
+            //     console.log("Jestem poza!!")
+            // } else {
+
+            // }
         }
         this.inter = setInterval(() => {
             console.log("leci interval")
             if (amove.length != 0)
                 amove.forEach(element => {
-
                     element.style.cursor = "pointer"
-
                     element.style.backgroundColor = "purple";
                     setTimeout(() => {
                         element.style.backgroundColor = this.userColor;
@@ -112,9 +138,9 @@ class Pawn {
                 });
             else {
                 clearInterval(this.inter)
+                this.tab = [false, false, false, false]
                 this.porusz(0, 0);
                 document.getElementById("kostka").style.display = "none";
-
             }
         }, 1000);
     }

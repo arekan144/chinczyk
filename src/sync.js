@@ -89,8 +89,9 @@ class Sync {
                         })
                     }
                 }
+                console.log(this.dane)
                 if (this.dane[4].kolej == this.numer) {
-                    console.log(this.numer == this.dane[4].kolej)
+
                     document.getElementById("kostka").style.display = "block";
                 }
                 else {

@@ -7,8 +7,6 @@ class Dice {
         this.data = []
     }
     getDice = async () => {
-        // console.log(await axios.post("http://localhost:4000/command", { command: "roolDice", id: id, num: num }))
-
         this.data = await axios.post(addres.adres + "command", { command: "roolDice", id: this.id, num: this.num })
         document.getElementById("kostka").style.backgroundImage = 'url("./' + this.data.data + '.png")'
         // console.log(this.data.data)

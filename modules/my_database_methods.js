@@ -78,7 +78,7 @@ let classes = {
             this.ready = false;
             this.positions = []
             for (var x = 0; x < 4; x++) {
-                this.positions.push({ absolute: 0, relative: "s" + x });
+                this.positions.push({ absolute: "s" + x, relative: 0 });
             }
         }
     },
