@@ -89,7 +89,7 @@ class Sync {
                         })
                     }
                 }
-                console.log(this.dane)
+                // console.log(this.dane)
                 if (this.dane[4].kolej == this.numer) {
 
                     document.getElementById("kostka").style.display = "block";

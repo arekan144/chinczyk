@@ -125,7 +125,34 @@ class Game {
         //console.log(this.positons, this.finish)
     }
     refresh(data) {
-        // data[]
+        data.forEach(gracz => {
+            // console.log(gracz)
+            if (gracz.nickname != undefined && gracz.num != undefined) {
+                var string = this.players_control.getPlayerColor(gracz.num)
+                for (var x = 0; x < 4; x++) {
+                    // console.log(gracz.positions)
+                    let blok = document.getElementById(string + x)
+                    // console.log(blok, x)
+                    switch (gracz.positions[x].absolute[0]) {
+                        case "s":
+                            blok.style.left = this.start[string][gracz.positions[x].absolute[1]].style.left
+                            blok.style.top = this.start[string][gracz.positions[x].absolute[1]].style.top
+                            console.log("S")
+                            break;
+                        case "f":
+                            blok.style.left = this.finish[string][gracz.positions[x].absolute[1]].style.left
+                            blok.style.top = this.finish[string][gracz.positions[x].absolute[1]].style.topbreak;
+                            console.log("F")
+                            break;
+                        default:
+                            blok.style.left = this.positons[gracz.positions[x].absolute].style.left;
+                            blok.style.top = this.positons[gracz.positions[x].absolute].style.top;
+                            console.log("D")
+                            break;
+                    }
+                }
+            }
+        });
     }
 }
 

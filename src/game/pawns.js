@@ -31,8 +31,9 @@ class Pawn {
         this.userPawns[0].onclick = () => {
             let num = 0;
             // console.log(num, this.ileKropek)
-            clearInterval(this.inter)
             if (this.ileKropek != 0 && this.tab[num]) {
+                console.log(this.tab[num])
+                clearInterval(this.inter)
                 for (var x = 0; x < 4; x++) {
                     this.userPawns[x].style.backgroundColor = this.userColor;
                     this.userPawns[x].style.cursor = null
@@ -43,8 +44,10 @@ class Pawn {
         this.userPawns[1].onclick = () => {
             let num = 1;
             // console.log(num, this.ileKropek)
-            clearInterval(this.inter)
+
             if (this.ileKropek != 0 && this.tab[num]) {
+                console.log(this.tab[num])
+                clearInterval(this.inter)
                 for (var x = 0; x < 4; x++) {
                     this.userPawns[x].style.backgroundColor = this.userColor;
                     this.userPawns[x].style.cursor = null
@@ -55,8 +58,10 @@ class Pawn {
         this.userPawns[2].onclick = () => {
             let num = 2;
             // console.log(num, this.ileKropek)
-            clearInterval(this.inter)
+
             if (this.ileKropek != 0 && this.tab[num]) {
+                console.log(this.tab[num])
+                clearInterval(this.inter)
                 for (var x = 0; x < 4; x++) {
                     this.userPawns[x].style.backgroundColor = this.userColor;
                     this.userPawns[x].style.cursor = null
@@ -67,8 +72,9 @@ class Pawn {
         this.userPawns[3].onclick = () => {
             let num = 3;
             // console.log(num, this.ileKropek)
-            clearInterval(this.inter)
             if (this.ileKropek != 0 && this.tab[num]) {
+                console.log(this.tab[num])
+                clearInterval(this.inter)
                 for (var x = 0; x < 4; x++) {
                     this.userPawns[x].style.backgroundColor = this.userColor;
                     this.userPawns[x].style.cursor = null
@@ -96,6 +102,7 @@ class Pawn {
                         this.tab[x] = true;
                         amove.push(this.userPawns[x]);
                     } else {
+                        this.tab[x] = false;
                         console.log("Nie moge wyjsc!")
                     }
                     break;
@@ -105,7 +112,7 @@ class Pawn {
                         this.tab[x] = true;
                         amove.push(this.userPawns[x]);
                     } else {
-
+                        this.tab[x] = false;
                     }
                     break;
             }
