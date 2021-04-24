@@ -76,6 +76,7 @@ class Pawn {
     }
     porusz(num, oile) {
         console.log(this.id, this.numerPokoju, num, oile);
+        this.ileKropek = 0;
         axios.post(addres.adres + "command", { command: "changePlace", id: this.id, num: this.numerPokoju, pionek: num, oile: oile }).then();
         document.getElementById("kostka").style.display = "none";
     }
