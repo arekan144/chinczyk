@@ -5,6 +5,7 @@
 import game from "./game.js"
 import dice from "./game/dice.js";
 import pawn from "./game/pawns.js";
+import address from "./addres.js"
 // plik zajmuje się przedewszysktim synchornizacją z serwerem
 class Sync {
     constructor() {
@@ -15,15 +16,15 @@ class Sync {
         this.stary = false;
     }
     requestData = async (npk) => {
-        return await axios.post("http://localhost:4000/data", npk)
+        return await axios.post(address.adres + "data", npk)
     }
     getRoom = async (nick) => {
-        var data = await axios.post("http://localhost:4000/", { nick: nick })
+        var data = await axios.post(address.adres, { nick: nick })
         return data;
     }
     changeReadyState = async (pak) => {
         // console.log(pak)
-        var data = await axios.post("http://localhost:4000/ready", pak)
+        var data = await axios.post(address.adres + "ready", pak)
         return data;
     }
     refresh = (num, id, once) => {
@@ -68,7 +69,7 @@ class Sync {
             } else if (document.getElementById("plansza")) {
                 if (document.getElementById("kostka") == null) {
                     pawn.setValues(game.players_control.getPlayerColor(this.numer));
-                    console.log(this.id)
+                    //console.log(this.id)
                     pawn.id = this.id;
                     pawn.numerPokoju = this.dodi[1];
                     dice.createDice(this.dodi);
@@ -95,6 +96,7 @@ class Sync {
                 else {
                     console.log(this.numer == this.dane[4].kolej)
                     document.getElementById("kostka").style.display = "";
+                    document.getElementById("kostka").style.backgroundImage = "";
                 }
                 game.refresh(this.dane)
             }

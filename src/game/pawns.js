@@ -1,5 +1,7 @@
 "use strict"
 
+import addres from "../addres.js";
+
 class Pawn {
     constructor() {
         this.userPawns = [];
@@ -27,47 +29,54 @@ class Pawn {
             let num = 0;
             // console.log(num, this.ileKropek)
             clearInterval(this.inter)
-            for (var x = 0; x < 4; x++) {
-                this.userPawns[x].style.backgroundColor = this.userColor;
-                this.userPawns[x].style.cursor = null
+            if (this.ileKropek != 0) {
+                for (var x = 0; x < 4; x++) {
+                    this.userPawns[x].style.backgroundColor = this.userColor;
+                    this.userPawns[x].style.cursor = null
+                }
+                this.porusz(num, this.ileKropek)
             }
-            this.porusz(num, this.ileKropek)
         };
         this.userPawns[1].onclick = () => {
             let num = 1;
             // console.log(num, this.ileKropek)
             clearInterval(this.inter)
-            for (var x = 0; x < 4; x++) {
-                this.userPawns[x].style.backgroundColor = this.userColor;
-                this.userPawns[x].style.cursor = null
+            if (this.ileKropek != 0) {
+                for (var x = 0; x < 4; x++) {
+                    this.userPawns[x].style.backgroundColor = this.userColor;
+                    this.userPawns[x].style.cursor = null
+                }
+                this.porusz(num, this.ileKropek)
             }
-            this.porusz(num, this.ileKropek)
         };
         this.userPawns[2].onclick = () => {
             let num = 2;
             // console.log(num, this.ileKropek)
             clearInterval(this.inter)
-            for (var x = 0; x < 4; x++) {
-                this.userPawns[x].style.backgroundColor = this.userColor;
-                this.userPawns[x].style.cursor = null
+            if (this.ileKropek != 0) {
+                for (var x = 0; x < 4; x++) {
+                    this.userPawns[x].style.backgroundColor = this.userColor;
+                    this.userPawns[x].style.cursor = null
+                }
+                this.porusz(num, this.ileKropek)
             }
-            this.porusz(num, this.ileKropek)
         };
         this.userPawns[3].onclick = () => {
             let num = 3;
             // console.log(num, this.ileKropek)
             clearInterval(this.inter)
-            for (var x = 0; x < 4; x++) {
-                this.userPawns[x].style.backgroundColor = this.userColor;
-                this.userPawns[x].style.cursor = null
+            if (this.ileKropek != 0) {
+                for (var x = 0; x < 4; x++) {
+                    this.userPawns[x].style.backgroundColor = this.userColor;
+                    this.userPawns[x].style.cursor = null
+                }
+                this.porusz(num, this.ileKropek)
             }
-            this.porusz(num, this.ileKropek)
         };
     }
     porusz(num, oile) {
         console.log(this.id, this.numerPokoju, num, oile);
-        axios.post("http://localhost:4000/command", { command: "changePlace", id: this.id, num: this.numerPokoju, pionek: num, oile: oile }).then();
-        document.getElementById("kostka").style.backgroundImage = null;
+        axios.post(addres.adres + "command", { command: "changePlace", id: this.id, num: this.numerPokoju, pionek: num, oile: oile }).then();
         document.getElementById("kostka").style.display = "none";
     }
     check = (data) => {
@@ -104,7 +113,7 @@ class Pawn {
                 clearInterval(this.inter)
                 this.porusz(0, 0);
                 document.getElementById("kostka").style.display = "none";
-                document.getElementById("kostka").style.backgroundImage = null;
+
             }
         }, 1000);
     }
