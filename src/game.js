@@ -14,10 +14,10 @@ class Game {
     }
     positons = () => {
         this.finish = {
-            "#ff3333": [document.getElementById("1;5"), document.getElementById("2;5"), document.getElementById("3;5"), document.getElementById("4;5"),],
-            "#3333ff": [document.getElementById("5;1"), document.getElementById("5;2"), document.getElementById("5;3"), document.getElementById("5;4"),],
-            "#FFFF00": [document.getElementById("9;5"), document.getElementById("8;5"), document.getElementById("7;5"), document.getElementById("6;5"),],
-            "#008000": [document.getElementById("5;9"), document.getElementById("5;8"), document.getElementById("5;7"), document.getElementById("5;6"),],
+            "#ff3333": [0, document.getElementById("1;5"), document.getElementById("2;5"), document.getElementById("3;5"), document.getElementById("4;5"),],
+            "#3333ff": [0, document.getElementById("5;1"), document.getElementById("5;2"), document.getElementById("5;3"), document.getElementById("5;4"),],
+            "#FFFF00": [0, document.getElementById("9;5"), document.getElementById("8;5"), document.getElementById("7;5"), document.getElementById("6;5"),],
+            "#008000": [0, document.getElementById("5;9"), document.getElementById("5;8"), document.getElementById("5;7"), document.getElementById("5;6"),],
         }
         this.start = {
             "#ff3333": [document.getElementById("1;1"), document.getElementById("2;1"), document.getElementById("1;2"), document.getElementById("2;2"),],
@@ -26,10 +26,10 @@ class Game {
             "#008000": [document.getElementById("1;8"), document.getElementById("2;8"), document.getElementById("1;9"), document.getElementById("2;9"),],
         }
         for (var x = 0; x < 4; x++) {
-            this.finish["#ff3333"][x].style.backgroundColor = this.players_control.getPlayerColor(0)
-            this.finish["#3333ff"][x].style.backgroundColor = this.players_control.getPlayerColor(1)
-            this.finish["#FFFF00"][x].style.backgroundColor = this.players_control.getPlayerColor(2)
-            this.finish["#008000"][x].style.backgroundColor = this.players_control.getPlayerColor(3)
+            this.finish["#ff3333"][x + 1].style.backgroundColor = this.players_control.getPlayerColor(0)
+            this.finish["#3333ff"][x + 1].style.backgroundColor = this.players_control.getPlayerColor(1)
+            this.finish["#FFFF00"][x + 1].style.backgroundColor = this.players_control.getPlayerColor(2)
+            this.finish["#008000"][x + 1].style.backgroundColor = this.players_control.getPlayerColor(3)
 
             this.start["#ff3333"][x].style.backgroundColor = this.players_control.getPlayerColor(0) + "80"
             this.start["#3333ff"][x].style.backgroundColor = this.players_control.getPlayerColor(1) + "80"
@@ -137,12 +137,14 @@ class Game {
                         case "s":
                             blok.style.left = this.start[string][gracz.positions[x].absolute[1]].style.left
                             blok.style.top = this.start[string][gracz.positions[x].absolute[1]].style.top
-                            console.log("S")
+                            console.log("S", gracz.positions[x].absolute[1])
                             break;
                         case "f":
+
                             blok.style.left = this.finish[string][gracz.positions[x].absolute[1]].style.left
-                            blok.style.top = this.finish[string][gracz.positions[x].absolute[1]].style.topbreak;
-                            console.log("F")
+                            blok.style.top = this.finish[string][gracz.positions[x].absolute[1]].style.top
+
+                            console.log("F", this.finish[string][gracz.positions[x].absolute[1]])
                             break;
                         default:
                             blok.style.left = this.positons[gracz.positions[x].absolute].style.left;

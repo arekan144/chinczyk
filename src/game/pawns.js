@@ -21,16 +21,8 @@ class Pawn {
             document.getElementById(userColor + 0), document.getElementById(userColor + 1),
             document.getElementById(userColor + 2), document.getElementById(userColor + 3)
         ]
-        // let blok = this;
-        // for (var x = 0; x < this.userPawns.length; x++) {
-        //     console.log(this.userPawns)
-        //     this.userPawns[x].addEventListener('click', function () {
-        //         if (blok.ileKropek != 0)
-        //             console.log(this.id[this.id.length - 1], blok.ileKropek);
-        //     })
         this.userPawns[0].onclick = () => {
             let num = 0;
-            // console.log(num, this.ileKropek)
             if (this.ileKropek != 0 && this.tab[num]) {
                 console.log(this.tab[num])
                 clearInterval(this.inter)
@@ -98,40 +90,49 @@ class Pawn {
             switch (data.positions[x].absolute[0]) {
                 case "s":
                     if (this.ileKropek == 1 || this.ileKropek == 6) {
-                        console.log("Moge wyjsc")
+                        // console.log("Moge wyjsc")
                         this.tab[x] = true;
                         amove.push(this.userPawns[x]);
                     } else {
                         this.tab[x] = false;
-                        console.log("Nie moge wyjsc!")
+                        // console.log("Nie moge wyjsc!")
                     }
                     break;
-                case "f": break;
+                case "f":
+                    if (eval(data.positions[x].absolute[1]) + this.ileKropek < 5) {
+                        var czy = true;
+                        for (var y = 0; y < 4; y++) {
+                            if (data.positions[y].absolute == "f" + (eval(data.positions[x].absolute[1]) + this.ileKropek))
+                                czy = false;
+                        }
+                        if (czy) {
+                            this.tab[x] = true;
+                            amove.push(this.userPawns[x]);
+                        }
+                        else this.tab[x] = false;
+                    }
+                    break;
                 default:
-                    if (data.positions[x].relative <= 40) {
+                    if (data.positions[x].relative + this.ileKropek <= 40) {
                         this.tab[x] = true;
                         amove.push(this.userPawns[x]);
                     } else {
-                        this.tab[x] = false;
+                        if ((data.positions[x].relative + this.ileKropek) % 40 < 5) {
+                            var czy = true;
+                            for (var y = 0; y < 4; y++) {
+                                if (data.positions[y].absolute == "f" + ((eval(data.positions[x].absolute[1]) + this.ileKropek) % 40))
+                                    czy = false;
+                            }
+                            if (czy) {
+                                this.tab[x] = true;
+                                amove.push(this.userPawns[x]);
+                            } else this.tab[x] = false;
+                        }
+                        else this.tab[x] = false;
+
                     }
                     break;
             }
-
-
-            // if (data.positions[x].relative[0] == "s") {
-            //     console.log(x, "Jest na stracie!!!")
-            //     if (this.ileKropek == 1 || this.ileKropek == 6) {
-            //         console.log("Moge wyjsc")
-            //         amove.push(this.userPawns[x]);
-            //     } else {
-            //         console.log("Nie moge wyjsc!")
-            //     }
-            // }
-            // else if (data.positions[x].relative[0] == "f") {
-            //     console.log("Jestem poza!!")
-            // } else {
-
-            // }
         }
         this.inter = setInterval(() => {
             console.log("leci interval")
