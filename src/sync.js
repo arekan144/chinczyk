@@ -54,16 +54,6 @@ class Sync {
             //console.log(game.players_control.player_ready)
             game.players_control.updateQue(this.dane, this.numer)
             if (this.dane[4] != undefined && document.getElementById("plansza") == undefined) {
-                // dice.createDice(this.dodi);
-                // if (dice.kostka) {
-                //     dice.kostka.addEventListener("click", async function () {
-                //         if (this.style.backgroundImage == "") {
-                //             pawn.ileKropek = await dice.getDice();
-                //             console.log(pawn.ileKropek)
-                //             pawn.check();
-                //         }
-                //     })
-                // }
                 game.createPlayingArea(this.dane, this.numer);
                 pawn.setValues(game.players_control.getPlayerColor(this.numer));
             } else if (document.getElementById("plansza")) {
@@ -90,18 +80,24 @@ class Sync {
                     }
                 }
                 // console.log(this.dane)
-                if (this.dane[4].kolej == this.numer) {
-
+                if (this.dane[4].kolej == this.numer && !game.koniec) {
                     document.getElementById("kostka").style.display = "block";
                 }
                 else {
-                    console.log(this.numer == this.dane[4].kolej)
                     document.getElementById("kostka").style.display = "";
                     document.getElementById("kostka").style.backgroundImage = "";
                 }
                 game.refresh(this.dane)
             }
-            setTimeout(function () { ref(num, id) }, 2000);
+            setTimeout(function () {
+                if (!game.koniec) ref(num, id);
+                else {
+                    game.zakoncz();
+                    this.dane[4].kolej = 0;
+                    document.getElementById("kostka").style.display = "";
+                    document.getElementById("kostka").style.backgroundImage = "pyt.png";
+                }
+            }, 2000);
 
         })
     }

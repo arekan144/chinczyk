@@ -52,6 +52,14 @@ class Players {
                     }
                 }
             }
+        } else {
+            for (var x = 0; x < ((dane.length < 4) ? 4 : dane.length); x++) {
+                if (dane[x].nickname != undefined) {
+                    document.getElementById(dane[x].num + "g").parentElement.style.backgroundColor = this.getPlayerColor(dane[x].num);
+                }
+
+            }
+            document.getElementsByClassName("readyState")[0].id = "ready"
         }
     }
     readyState = function () {

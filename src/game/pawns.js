@@ -24,7 +24,7 @@ class Pawn {
         this.userPawns[0].onclick = () => {
             let num = 0;
             if (this.ileKropek != 0 && this.tab[num]) {
-                console.log(this.tab[num])
+                // console.log(this.tab[num])
                 clearInterval(this.inter)
                 for (var x = 0; x < 4; x++) {
                     this.userPawns[x].style.backgroundColor = this.userColor;
@@ -36,9 +36,8 @@ class Pawn {
         this.userPawns[1].onclick = () => {
             let num = 1;
             // console.log(num, this.ileKropek)
-
             if (this.ileKropek != 0 && this.tab[num]) {
-                console.log(this.tab[num])
+                // console.log(this.tab[num])
                 clearInterval(this.inter)
                 for (var x = 0; x < 4; x++) {
                     this.userPawns[x].style.backgroundColor = this.userColor;
@@ -52,7 +51,7 @@ class Pawn {
             // console.log(num, this.ileKropek)
 
             if (this.ileKropek != 0 && this.tab[num]) {
-                console.log(this.tab[num])
+                // console.log(this.tab[num])
                 clearInterval(this.inter)
                 for (var x = 0; x < 4; x++) {
                     this.userPawns[x].style.backgroundColor = this.userColor;
@@ -65,7 +64,7 @@ class Pawn {
             let num = 3;
             // console.log(num, this.ileKropek)
             if (this.ileKropek != 0 && this.tab[num]) {
-                console.log(this.tab[num])
+                // console.log(this.tab[num])
                 clearInterval(this.inter)
                 for (var x = 0; x < 4; x++) {
                     this.userPawns[x].style.backgroundColor = this.userColor;
@@ -76,7 +75,7 @@ class Pawn {
         };
     }
     porusz(num, oile) {
-        console.log(num, oile);
+        // console.log(num, oile);
         this.ileKropek = 0;
         axios.post(addres.adres + "command", { command: "changePlace", id: this.id, num: this.numerPokoju, pionek: num, oile: oile }).then();
         document.getElementById("kostka").style.display = "none";
@@ -114,14 +113,23 @@ class Pawn {
                     break;
                 default:
                     if (data.positions[x].relative + this.ileKropek <= 40) {
+                        console.log("Jest mniej od 40", data.positions[x].relative, data.positions[x].absolute)
                         this.tab[x] = true;
                         amove.push(this.userPawns[x]);
                     } else {
+                        console.log("Jest więcej niż 40", data.positions[x].relative, data.positions[x].absolute)
+
                         if ((data.positions[x].relative + this.ileKropek) % 40 < 5) {
+                            console.log("modulo wynosi:", (data.positions[x].relative + this.ileKropek) % 40)
+                            let modulo = (data.positions[x].relative + this.ileKropek) % 40;
                             var czy = true;
                             for (var y = 0; y < 4; y++) {
-                                if (data.positions[y].absolute == "f" + ((eval(data.positions[x].absolute[1]) + this.ileKropek) % 40))
+
+                                console.log(data.positions[y].absolute, "--> " + y + " pionek", "f" + modulo);
+                                if (data.positions[y].absolute == "f" + modulo) {
                                     czy = false;
+                                    console.log("false!")
+                                }
                             }
                             if (czy) {
                                 this.tab[x] = true;
@@ -135,7 +143,7 @@ class Pawn {
             }
         }
         this.inter = setInterval(() => {
-            console.log("leci interval")
+            // console.log("leci interval")
             if (amove.length != 0)
                 amove.forEach(element => {
                     element.style.cursor = "pointer"

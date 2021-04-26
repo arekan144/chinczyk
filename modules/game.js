@@ -26,6 +26,7 @@ class Game {
             case "f":
                 if (eval(dane.positions[data.pionek].absolute[1]) + data.oile < 5) {
                     dane.positions[data.pionek].absolute = "f" + (eval(dane.positions[data.pionek].absolute[1]) + data.oile);
+                    dane.positions[data.pionek].relative += data.oile;
                 }
                 console.log("F")
                 break;

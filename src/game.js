@@ -11,6 +11,7 @@ class Game {
         this.pawns = []
         this.dane = []
         this.num;
+        this.koniec = false;
     }
     positons = () => {
         this.finish = {
@@ -124,11 +125,28 @@ class Game {
         }
         //console.log(this.positons, this.finish)
     }
+    zakoncz() {
+        var div_na_koniec = document.createElement("div");
+        div_na_koniec.innerHTML = "Wygrał gracz: " + this.koniec.name + ". Brawo!<br/>";
+        div_na_koniec.id = "koniec";
+
+        var button = document.createElement("button");
+        button.innerText = "Kliknij, aby zagrać jeszcze raz!";
+        button.onclick = function () { location.reload(); }
+        div_na_koniec.style.backgroundColor = this.players_control.getPlayerColor(this.koniec.num);
+        div_na_koniec.append(button);
+        document.getElementById("strona").appendChild(div_na_koniec);
+
+    }
+
     refresh(data) {
+        // console.log(this.players_control.numOfPlayers)
         data.forEach(gracz => {
+
             // console.log(gracz)
             if (gracz.nickname != undefined && gracz.num != undefined) {
                 var string = this.players_control.getPlayerColor(gracz.num)
+                var dat = 0;
                 for (var x = 0; x < 4; x++) {
                     // console.log(gracz.positions)
                     let blok = document.getElementById(string + x)
@@ -137,25 +155,29 @@ class Game {
                         case "s":
                             blok.style.left = this.start[string][gracz.positions[x].absolute[1]].style.left
                             blok.style.top = this.start[string][gracz.positions[x].absolute[1]].style.top
-                            console.log("S", gracz.positions[x].absolute[1])
+                            // console.log("S", gracz.positions[x].absolute[1])
                             break;
                         case "f":
-
                             blok.style.left = this.finish[string][gracz.positions[x].absolute[1]].style.left
                             blok.style.top = this.finish[string][gracz.positions[x].absolute[1]].style.top
-
-                            console.log("F", this.finish[string][gracz.positions[x].absolute[1]])
+                            dat++;
+                            // console.log("F", this.finish[string][gracz.positions[x].absolute[1]])
                             break;
                         default:
                             blok.style.left = this.positons[gracz.positions[x].absolute].style.left;
                             blok.style.top = this.positons[gracz.positions[x].absolute].style.top;
-                            console.log("D")
+                            // console.log("D")
                             break;
                     }
+                }
+                if (dat == 4) {
+                    console.log("KONIEC!!!", gracz)
+                    this.koniec = gracz;
                 }
             }
         });
     }
+
 }
 
 export default new Game;
