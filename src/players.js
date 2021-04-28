@@ -12,7 +12,7 @@ class Players {
         switch (num) {
             case 0: return "#ff3333"
             case 1: return "#3333ff"
-            case 2: return "#FFFF00"
+            case 2: return "#ffcc00"
             case 3: return "#008000"
             default: return "brown"
         }

@@ -52,6 +52,7 @@ class Game {
         all.forEach(gracz => {
             if (data.id != gracz._id && gracz.positions != undefined) {
                 // console.log(gracz, "ten!")
+
                 let czy = false;
                 for (var x = 0; x < 4; x++) {
                     // console.log(gracz.positions[x].absolute, dane.positions[data.pionek].absolute, gracz.positions[x].absolute[0] != "s"

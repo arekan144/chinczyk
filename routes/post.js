@@ -17,6 +17,7 @@ let dane = {
 
 router.post("/", async (req, res) => {
     console.log("przychodzi!", req.body);
+
     while (3 < await Database.methods.countDataIn(dane.uzytkownicy, { room: dane.numerPokoju })) {
         dane.numerPokoju++;
     };
@@ -26,7 +27,7 @@ router.post("/", async (req, res) => {
     var idGracza = await Database.methods.insertInto(dane.uzytkownicy, new Database.classes.UzytkownikSesji(req.body.nick, dane.numerPokoju, numerGracza));
     console.log(idGracza)
     res.set({ 'Content-Type': 'aplication/json', 'Access-Control-Allow-Origin': '*' })
-    res.send(JSON.stringify({ numPok: dane.numerPokoju, id: idGracza, numer: numerGracza }));
+    res.send(JSON.stringify({ numPok: dane.numerPokoju, id: idGracza, numer: numerGracza, lang: req.headers['accept-language'] }));
 })
 
 router.post("/data", async (req, res) => {
@@ -35,7 +36,7 @@ router.post("/data", async (req, res) => {
 
     //console.log(data)
     if (dane.pokoje[req.body.numerPokoju] != undefined) {
-        data.push({ kolej: dane.pokoje[req.body.numerPokoju][0] })
+        data.push({ kolej: dane.pokoje[req.body.numerPokoju][0], debug: dane.pokoje[req.body.numerPokoju][2] })
     }
     res.set({ 'Content-Type': 'aplication/json', 'Access-Control-Allow-Origin': '*' })
     res.send(JSON.stringify(data, null, 5))
@@ -56,7 +57,7 @@ router.post("/ready", async (req, res) => {
             console.log("start gry w pokoju", req.body.room)
             for (var x = 0; x < 4 - ileGraczy; x++)
                 Database.methods.insertInto(dane.uzytkownicy, new Database.classes.PustyUzytkownik(req.body.room));
-            dane.pokoje[req.body.room] = [0, ileGraczy];
+            dane.pokoje[req.body.room] = [0, ileGraczy, 0];
         }
     }
     res.set({ 'Content-Type': 'aplication/json', 'Access-Control-Allow-Origin': '*' })
@@ -67,6 +68,7 @@ router.post("/command", async (req, res) => {
     console.log("Polecenie:", req.body.command, req.body.id, req.body.num);
     dane.czas = 0;
     if (req.body.command == "changePlace") {
+        dane.pokoje[req.body.num][2]++;
         switch (dane.pokoje[req.body.num][0] + 1) {
             case (dane.pokoje[req.body.num][1]):
                 dane.pokoje[req.body.num][0] = 0;

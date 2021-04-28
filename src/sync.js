@@ -14,6 +14,8 @@ class Sync {
         this.dodi = [];
         this.numer = "";
         this.stary = false;
+        this.debug = -1;
+        this.lang;
     }
     requestData = async (npk) => {
         return await axios.post(address.adres + "data", npk)
@@ -62,10 +64,13 @@ class Sync {
                     //console.log(this.id)
                     pawn.id = this.id;
                     pawn.numerPokoju = this.dodi[1];
-                    dice.createDice(this.dodi);
+                    // console.log(this.lang)
+                    dice.createDice(this.dodi, this.lang);
                     if (dice.kostka) {
                         dice.kostka.addEventListener("click", async function () {
+
                             if (this.style.backgroundImage == "") {
+
                                 let dane = "";
                                 sync.dane.forEach(element => {
                                     if (element.num == sync.numer)
@@ -73,19 +78,27 @@ class Sync {
                                 });
                                 clearInterval(pawn.inter)
                                 pawn.ileKropek = await dice.getDice();
-                                console.log(pawn.ileKropek)
-                                pawn.check(dane);
+                                // console.log(pawn.ileKropek)
+                                pawn.check(dane, game.positons, game.finish);
+
+
                             }
+
                         })
                     }
                 }
                 // console.log(this.dane)
-                if (this.dane[4].kolej == this.numer && !game.koniec) {
-                    document.getElementById("kostka").style.display = "block";
-                }
-                else {
-                    document.getElementById("kostka").style.display = "";
-                    document.getElementById("kostka").style.backgroundImage = "";
+                if (this.debug != this.dane[4].debug) {
+                    console.log("wcześniej: " + this.debug, "teraz", this.dane[4].debug)
+                    this.debug = this.dane[4].debug
+                    if (this.dane[4].kolej == this.numer && !game.koniec) {
+                        document.getElementById("kostka").style.backgroundImage = "";
+                        document.getElementById("kostka").style.display = "block";
+                    }
+                    else {
+                        document.getElementById("kostka").style.display = "";
+                        document.getElementById("kostka").style.backgroundImage = "";
+                    }
                 }
                 game.refresh(this.dane)
             }

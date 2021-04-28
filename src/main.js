@@ -1,5 +1,4 @@
 "use strict"
-//PRZERÓB WSZYSTKIE OBJEKTY NA KLASY I WYTWÓRZ Z POWROTEM TE OBJEKTY JAKO POCHODNE TYCH CLASS (NEW CLASS)
 // plik main.js, wszystkie funkcje są wykonywane tutaj
 import start from "./start.js";
 import sync from "./sync.js";
@@ -22,6 +21,8 @@ window.onload = () => {
         console.log(response.data.id);
         // console.log(response.data)
         dane.dodajDane(response.data.numPok, response.data.id)
+
+        sync.lang = response.data.lang
         sync.dodi = [dane.id, dane.numerPokoju];
         sync.refresh(dane.numerPokoju, dane.id, response.data.numer);
 
@@ -29,11 +30,4 @@ window.onload = () => {
 
 }
 
-// setInterval(console.log(dane), 3000)
-// setInterval(console.log(""), 3000)
-// function call() {
-//     console.log("Call");
-//     setTimeout(function () { call() }, 3000)
 
-// }
-// call();
