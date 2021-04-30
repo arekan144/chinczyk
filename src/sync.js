@@ -55,7 +55,7 @@ class Sync {
             // console.log(this.dane, "ref!!!")
             //console.log(game.players_control.player_ready)
             game.players_control.updateQue(this.dane, this.numer)
-            if (this.dane[4] != undefined && document.getElementById("plansza") == undefined) {
+            if (this.dane[4] != undefined && document.getElementById("plansza") == undefined && !game.koniec) {
                 game.createPlayingArea(this.dane, this.numer);
                 pawn.setValues(game.players_control.getPlayerColor(this.numer));
             } else if (document.getElementById("plansza")) {
@@ -89,8 +89,17 @@ class Sync {
                 }
                 // console.log(this.dane)
                 if (this.debug != this.dane[4].debug) {
-                    console.log("wcześniej: " + this.debug, "teraz", this.dane[4].debug)
+                    // console.log("wcześniej: " + this.debug, "teraz", this.dane[4].debug)
                     this.debug = this.dane[4].debug
+
+                    for (var x = 0; x < 4; x++) {
+                        // console.log(x, this.dane[4].kolej)
+                        if (this.dane[4].kolej == x)
+                            document.getElementById(x + "g").parentElement.style.boxShadow = "inset 0 0 3px white, 0 0 3px black";
+                        else
+                            document.getElementById(x + "g").parentElement.style.boxShadow = "";
+                    }
+                    document.getElementById("czasomierz").style.backgroundColor = game.players_control.getPlayerColor(this.dane[4].kolej)
                     if (this.dane[4].kolej == this.numer && !game.koniec) {
                         document.getElementById("kostka").style.backgroundImage = "";
                         document.getElementById("kostka").style.display = "block";
@@ -105,8 +114,12 @@ class Sync {
             setTimeout(function () {
                 if (!game.koniec) ref(num, id);
                 else {
-                    game.zakoncz();
-                    this.dane[4].kolej = 0;
+                    if (game.koniec != true)
+                        game.zakoncz();
+                    else
+                        game.wyrzucono();
+                    // console.log(this.dane)
+                    // this.dane[4].kolej = 'Koniec';
                     document.getElementById("kostka").style.display = "";
                     document.getElementById("kostka").style.backgroundImage = "pyt.png";
                 }

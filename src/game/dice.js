@@ -43,7 +43,7 @@ class Dice {
         // console.log(this.jezyki)
     }
     createDice = (duo, lang) => {
-        console.log("dice")
+        // console.log("dice")
         this.lang = lang.split(",")[0];
         this.setSpeach();
         this.id = duo[0];

@@ -12,6 +12,8 @@ class Game {
         this.dane = []
         this.num;
         this.koniec = false;
+        this.czas = 60;
+        this.czasomierz;
     }
     positons = () => {
         this.finish = {
@@ -88,7 +90,7 @@ class Game {
     }
     createPlayingArea = (dane, num) => {
         this.num = num;
-        console.log(dane, num, "dane przyszly")
+        // console.log(dane, num, "dane przyszly")
         this.dane = dane;
         var obszarGry = document.getElementById("obszarGry");
         var plansza = document.createElement("div");
@@ -123,11 +125,23 @@ class Game {
             //console.log(this.positons[1 + x])
             this.positons[1 + x].style.backgroundColor = this.players_control.getPlayerColor(x / 10) + "63"
         }
-        //console.log(this.positons, this.finish)
-    }
+
+        this.czasomierz =
+            setInterval(() => {
+                // console.log(this.czas);
+                document.getElementById("czasomierz").innerText = this.czas;
+                this.czas--;
+                if (this.pawns)
+                    if (this.czas == 1) {
+                        this.czas = 60;
+                    }
+
+            }, 1000);
+
+    };
     zakoncz() {
         var div_na_koniec = document.createElement("div");
-        div_na_koniec.innerHTML = "Wygrał gracz: " + this.koniec.name + ". Brawo!<br/>";
+        div_na_koniec.innerHTML = "Wygrał gracz: " + this.koniec.nickname + ". Brawo!<br/>";
         div_na_koniec.id = "koniec";
 
         var button = document.createElement("button");
@@ -138,46 +152,97 @@ class Game {
         document.getElementById("strona").appendChild(div_na_koniec);
 
     }
-
-    refresh(data) {
-        // console.log(this.players_control.numOfPlayers)
-        data.forEach(gracz => {
-
-            // console.log(gracz)
-            if (gracz.nickname != undefined && gracz.num != undefined) {
-                var string = this.players_control.getPlayerColor(gracz.num)
-                var dat = 0;
-                for (var x = 0; x < 4; x++) {
-                    // console.log(gracz.positions)
-                    let blok = document.getElementById(string + x)
-                    // console.log(blok, x)
-                    switch (gracz.positions[x].absolute[0]) {
-                        case "s":
-                            blok.style.left = this.start[string][gracz.positions[x].absolute[1]].style.left
-                            blok.style.top = this.start[string][gracz.positions[x].absolute[1]].style.top
-                            // console.log("S", gracz.positions[x].absolute[1])
-                            break;
-                        case "f":
-                            blok.style.left = this.finish[string][gracz.positions[x].absolute[1]].style.left
-                            blok.style.top = this.finish[string][gracz.positions[x].absolute[1]].style.top
-                            dat++;
-                            // console.log("F", this.finish[string][gracz.positions[x].absolute[1]])
-                            break;
-                        default:
-                            blok.style.left = this.positons[gracz.positions[x].absolute].style.left;
-                            blok.style.top = this.positons[gracz.positions[x].absolute].style.top;
-                            // console.log("D")
-                            break;
-                    }
-                }
-                if (dat == 4) {
-                    console.log("KONIEC!!!", gracz)
-                    this.koniec = gracz;
-                }
-            }
-        });
+    wyrzucono() {
+        document.getElementById("plansza").remove();
+        var div_na_koniec = document.createElement("div");
+        div_na_koniec.innerHTML = "Zostałeś wyrzucony!<br>";
+        div_na_koniec.id = "koniec";
+        var button = document.createElement("button");
+        button.innerText = "Kliknij, aby zagrać jeszcze raz!";
+        button.onclick = function () { location.reload(); }
+        div_na_koniec.style.backgroundColor = "grey";
+        div_na_koniec.append(button);
+        document.getElementById("strona").appendChild(div_na_koniec);
     }
+    refresh(data) {
+        // console.log(data[4], this.players_control.numOfPlayers)
+        // console.log(data[4].wyzucone.indexOf(this.num))
+        this.czas = data[4].czas
+        if (data[4].wyzucone.indexOf(this.num) != -1) {
+            // console.log("ok")
+            this.koniec = true;
+            // this.wyrzucono();
+        } else {
+            if (this.players_control.numOfPlayers - data[4].wyzucone.length < 2) {
+                let kto_wygral = 0;
+                while (data[4].wyzucone.indexOf(kto_wygral) != -1) {
+                    kto_wygral++;
+                }
 
+                for (var x = 0; x < 4; x++) {
+                    data.forEach(gracz => {
+                        if (gracz.nickname != undefined && gracz.num == kto_wygral) {
+                            // console.log(gracz.nickname)
+                            this.koniec = gracz;
+                        }
+                    })
+                }
+
+                // console.log(kto_wygral)
+            }
+            else {
+                data.forEach(gracz => {
+                    // console.log(gracz)
+                    if (gracz.nickname != undefined && gracz.num != undefined && data[4].wyzucone.indexOf(gracz.num) == -1) {
+
+                        var string = this.players_control.getPlayerColor(gracz.num)
+                        var dat = 0;
+                        for (var x = 0; x < 4; x++) {
+                            // console.log(gracz.positions)
+                            let blok = document.getElementById(string + x)
+                            // console.log(blok, x)
+                            switch (gracz.positions[x].absolute[0]) {
+                                case "s":
+                                    blok.style.left = this.start[string][gracz.positions[x].absolute[1]].style.left
+                                    blok.style.top = this.start[string][gracz.positions[x].absolute[1]].style.top
+                                    // console.log("S", gracz.positions[x].absolute[1])
+                                    break;
+                                case "f":
+                                    blok.style.left = this.finish[string][gracz.positions[x].absolute[1]].style.left
+                                    blok.style.top = this.finish[string][gracz.positions[x].absolute[1]].style.top
+                                    dat++;
+                                    // console.log("F", this.finish[string][gracz.positions[x].absolute[1]])
+                                    break;
+                                default:
+                                    blok.style.left = this.positons[gracz.positions[x].absolute].style.left;
+                                    blok.style.top = this.positons[gracz.positions[x].absolute].style.top;
+                                    // console.log("D")
+                                    break;
+                            }
+                        }
+                        if (dat == 4) {
+                            // console.log("KONIEC!!!", gracz)
+                            this.koniec = gracz;
+                        }
+
+                    }
+                    if (data[4].wyzucone.indexOf(gracz.num) != -1 && gracz.nickname != undefined && gracz.num != undefined) {
+                        var string = this.players_control.getPlayerColor(gracz.num)
+                        for (var x = 0; x < 4; x++) {
+                            let blok = document.getElementById(string + x)
+                            blok.style.left = this.start[string][x].style.left
+                            blok.style.top = this.start[string][x].style.top
+                            blok.style.backgroundColor = "grey"
+                        }
+                        document.getElementById(gracz.num + "g").parentElement.style.backgroundColor = "grey";
+
+                    }
+
+                });
+            }
+        }
+
+    }
 }
 
 export default new Game;

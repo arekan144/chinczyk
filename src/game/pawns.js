@@ -13,7 +13,6 @@ class Pawn {
         this.tab = [false, false, false, false]
     }
 
-
     setValues = (userColor) => {
         this.userColor = userColor;
         // console.log(document.getElementById(userColor + 1));
@@ -66,7 +65,7 @@ class Pawn {
     check = (data, pos, fin) => {
         // console.log(pos)
         // console.log(data);
-        console.log(data.num)
+        // console.log(data.num)
         let amove = [];
         if (this.ileKropek != 0)
             for (var x = 0; x < 4; x++) {
@@ -153,7 +152,7 @@ class Pawn {
                 }, 500);
             })
         this.inter = setInterval(() => {
-            console.log("!")
+            // console.log("!")
             if (amove.length != 0)
                 amove.forEach(element => {
                     element.style.cursor = "pointer"

@@ -18,7 +18,7 @@ window.onload = () => {
 
     sync.getRoom(dane.nick).then((response) => {
         sync.id = response.data.id;
-        console.log(response.data.id);
+        // console.log(response.data.id);
         // console.log(response.data)
         dane.dodajDane(response.data.numPok, response.data.id)
 

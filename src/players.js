@@ -19,7 +19,7 @@ class Players {
     }
     updateQue = function (dane, nu) {
         if (!this.koniec) {
-            console.log(dane)
+            // console.log(dane)
             for (var x = 0; x < ((dane.length < 4) ? 4 : dane.length); x++) {
                 // console.log(x)
                 //console.log(document.getElementById(x), document)
@@ -65,12 +65,12 @@ class Players {
     readyState = function () {
         if (this.clickable) {
             if (document.body.getElementsByClassName("readyState")[0].id != "ready") {
-                console.log("ready");
+                // console.log("ready");
                 document.body.getElementsByClassName("readyState")[0].id = "ready";
                 this.player_ready = true;
                 this.clickable = false;
             } else {
-                console.log("not ready");
+                // console.log("not ready");
                 document.body.getElementsByClassName("readyState")[0].id = "";
                 this.player_ready = false;
                 this.clickable = false;
