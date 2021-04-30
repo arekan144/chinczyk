@@ -50,6 +50,8 @@ class Pawn {
                             element.style.boxShadow = null;
                         }
                     });
+                    this.tab = [false, false, false, false]
+                    this.show = [false, false, false, false]
                     this.porusz(index, this.ileKropek)
                 }
             };
@@ -84,15 +86,15 @@ class Pawn {
                         }
                         break;
                     case "f":
-                        if (eval(data.positions[x].absolute[1]) + this.ileKropek < 5) {
+                        if (eval(data.positions[x].absolute.split("f")[1]) + this.ileKropek < 5) {
                             var czy = true;
                             for (var y = 0; y < 4; y++) {
-                                if (data.positions[y].absolute == "f" + (eval(data.positions[x].absolute[1]) + this.ileKropek))
+                                if (data.positions[y].absolute == "f" + (eval(data.positions[x].absolute.split("f")[1]) + this.ileKropek))
                                     czy = false;
                             }
                             if (czy) {
                                 this.tab[x] = true;
-                                this.show[x] = fin[this.userColor][eval(data.positions[x].absolute[1]) + this.ileKropek];
+                                this.show[x] = fin[this.userColor][eval(data.positions[x].absolute.split("f")[1]) + this.ileKropek];
                                 amove.push(this.userPawns[x]);
                             }
                             else {
